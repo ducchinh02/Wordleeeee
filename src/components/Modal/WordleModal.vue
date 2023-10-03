@@ -9,8 +9,8 @@ defineProps({
 const boardStore = useBoardStore();
 const winTheGame = computed(() => boardStore.winTheGame);
 
-const emit = defineEmits<{
-	closeModal: void;
+defineEmits<{
+	(e: "closeModal"): void;
 }>();
 
 const config = {
