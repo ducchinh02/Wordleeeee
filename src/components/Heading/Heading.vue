@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 defineProps({
 	tag: { type: String, required: false, default: "p" },
 	text: { type: String, required: false, default: "" },
