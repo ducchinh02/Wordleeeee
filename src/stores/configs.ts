@@ -7,7 +7,7 @@ interface State {
 export const useConfigStore = defineStore("config", {
 	state: (): State => ({
 		darkMode:
-			JSON.parse(localStorage.getItem("wordle-dark-mode") || false) || false,
+			JSON.parse(localStorage.getItem("wordle-dark-mode") || "false") || false,
 	}),
 	getters: {},
 	actions: {
