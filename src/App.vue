@@ -14,10 +14,11 @@ const darkMode = computed(() => configStore.darkMode);
 const isShowModal = computed(() => boardStore.showModal);
 const modalContent = computed(() => boardStore.modalContent);
 const winTheGame = computed(() => boardStore.winTheGame);
+const endGame = computed(() => boardStore.endGame);
 
 const resetStore = (): void => {
 	boardStore.showModal = false;
-	if (winTheGame.value) {
+	if (winTheGame.value || endGame.value) {
 		boardStore.resetStore();
 	}
 };

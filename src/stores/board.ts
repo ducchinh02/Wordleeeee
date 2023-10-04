@@ -9,6 +9,7 @@ interface State {
 	showModal: boolean;
 	modalContent: string;
 	winTheGame: boolean;
+	endGame: boolean;
 }
 
 export const useBoardStore = defineStore("board", {
@@ -27,6 +28,7 @@ export const useBoardStore = defineStore("board", {
 		showModal: false,
 		modalContent: "",
 		winTheGame: false,
+		endGame: false,
 	}),
 	getters: {},
 	actions: {
@@ -43,6 +45,7 @@ export const useBoardStore = defineStore("board", {
 			this.correctWord = words[Math.floor(Math.random() * words.length)];
 			this.modalContent = "";
 			this.winTheGame = false;
+			this.endGame = false;
 		},
 	},
 	// persist: true,

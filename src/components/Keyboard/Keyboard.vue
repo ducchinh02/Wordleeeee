@@ -60,7 +60,11 @@ const clickEnter = (): void => {
 		position.value === board.value.length &&
 		words.includes(board5Words.value)
 	) {
-		alert("Correct word is " + correctWord.value);
+		boardStore.$patch({
+			modalContent: 'Correct word is "' + correctWord.value + '"',
+			showModal: true,
+			endGame: true,
+		});
 	}
 };
 </script>
