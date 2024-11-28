@@ -30,7 +30,7 @@ const resetStore = (): void => {
 			class="min-h-screen default-transition dark:bg-gray-800 dark:text-white py-5 flex flex-col justify-center items-center px-4"
 		>
 			<div class="flex items-center gap-4 justify-center">
-				<Heading tag="h3" class="font-bold text-2xl" text="Wordle Game Boiz" />
+				<Heading tag="h3" class="font-bold text-2xl" text="Wordle Game" />
 				<SwitchMode />
 			</div>
 			<div class="container mx-auto">

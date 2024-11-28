@@ -16,12 +16,12 @@ const rows: string[] = [
 	"z x c v b n m",
 ];
 
-let board5Words = computed(
-	() =>
-		`${board.value[position.value - 5]}${board.value[position.value - 4]}${
-			board.value[position.value - 3]
-		}${board.value[position.value - 2]}${board.value[position.value - 1]}`
-);
+const userWord = computed(() => {
+	return Array.from({ length: 5 }, (_i, index) => index + 1)
+		.reverse()
+		.map((i) => board.value[position.value - i])
+		.join("");
+});
 
 const chooseLetter = (letter: string): void => {
 	if (currentRow.value > boardRow.value) return;
@@ -39,27 +39,25 @@ const removeLetter = (): void => {
 };
 
 const clickEnter = (): void => {
-	if (!words.includes(board5Words.value)) {
+	if (position.value % 5 !== 0 || position.value <= 0) {
+		return;
+	}
+	if (!words.includes(userWord.value)) {
 		boardStore.modalContent = "Invalid word!!";
 		boardStore.showModal = true;
 		return;
 	}
-	if (words.includes(board5Words.value)) {
-		if (position.value % 5 === 0 && position.value > 0) {
-			boardStore.increaseRow();
-		}
+	if (words.includes(userWord.value)) {
+		boardStore.increaseRow();
 	}
-	if (correctWord.value === board5Words.value) {
+	if (correctWord.value === userWord.value) {
 		boardStore.modalContent =
 			'You win. Correct word is "' + correctWord.value + '"';
 		boardStore.showModal = true;
 		boardStore.winTheGame = true;
 		return;
 	}
-	if (
-		position.value === board.value.length &&
-		words.includes(board5Words.value)
-	) {
+	if (position.value === board.value.length && words.includes(userWord.value)) {
 		boardStore.$patch({
 			modalContent: 'Correct word is "' + correctWord.value + '"',
 			showModal: true,
@@ -77,20 +75,6 @@ const clickEnter = (): void => {
 			:key="idx"
 			:class="{ 'mt-3': idx > 0 }"
 		>
-			<span
-				@click="clickEnter"
-				v-if="idx === 2"
-				class="letter-row cursor-pointer default-transition dark:hover:bg-gray-600 md:px-3 py-1 px-2 dark:bg-gray-500 flex bg-gray-300 hover:bg-gray-400 rounded-md"
-			>
-				Enter
-			</span>
-			<div class="letter-row" v-for="letter in row.split(' ')" :key="letter">
-				<span
-					@click="chooseLetter(letter)"
-					class="key-letter md:px-3 py-1 px-2 cursor-pointer default-transition dark:hover:bg-gray-600 rounded-md dark:bg-gray-500 flex bg-gray-300 hover:bg-gray-400"
-					>{{ letter.toUpperCase() }}
-				</span>
-			</div>
 			<div
 				v-if="idx === 2"
 				@click="removeLetter"
@@ -98,6 +82,20 @@ const clickEnter = (): void => {
 			>
 				Back
 			</div>
+			<div class="letter-row" v-for="letter in row.split(' ')" :key="letter">
+				<span
+					@click="chooseLetter(letter)"
+					class="key-letter md:px-3 py-1 px-2 cursor-pointer default-transition dark:hover:bg-gray-600 rounded-md dark:bg-gray-500 flex bg-gray-300 hover:bg-gray-400"
+					>{{ letter.toUpperCase() }}
+				</span>
+			</div>
+			<span
+				@click="clickEnter"
+				v-if="idx === 2"
+				class="letter-row cursor-pointer default-transition dark:hover:bg-gray-600 md:px-3 py-1 px-2 dark:bg-gray-500 flex bg-gray-300 hover:bg-gray-400 rounded-md"
+			>
+				Enter
+			</span>
 		</div>
 	</div>
 </template>
